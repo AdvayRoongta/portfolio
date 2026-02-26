@@ -3,48 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Michael Lan</title>
+  <title>Advay Roongta</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet" />
   <style>
     :root {
       --bg: #1a4a7a;
-      --bg2: #123d6a;
       --text: #ddeeff;
       --muted: #5a8fbc;
       --accent: #60c8ff;
-      --nav-active: #ffffff;
-      --nav-inactive: #5a8fbc;
       --link: #60c8ff;
     }
-
     [data-theme="light"] {
-      --bg: #f4f1ec;
-      --bg2: #e8e4dd;
-      --text: #1a2e38;
-      --muted: #7a8a92;
-      --accent: #1a2e38;
-      --nav-active: #1a2e38;
-      --nav-inactive: #7a8a92;
-      --link: #2a6278;
+      --bg: #f4f1ec; --text: #1a2e38; --muted: #7a8a92; --accent: #1a2e38; --link: #2a6278;
     }
-
     [data-theme="sepia"] {
-      --bg: #f5eedc;
-      --bg2: #ede3c8;
-      --text: #3b2c1a;
-      --muted: #8a7a62;
-      --accent: #3b2c1a;
-      --nav-active: #3b2c1a;
-      --nav-inactive: #8a7a62;
-      --link: #6b4c2a;
+      --bg: #f5eedc; --text: #3b2c1a; --muted: #8a7a62; --accent: #3b2c1a; --link: #6b4c2a;
     }
-
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html { font-size: 16px; }
-
     body {
       background-color: var(--bg);
       color: var(--text);
@@ -54,11 +31,92 @@
       display: flex;
       flex-direction: column;
       transition: background-color 0.3s, color 0.3s;
-      position: relative;
-      overflow-x: hidden;
     }
-
-    /* Background logo watermark */
+    nav {
+      display: flex;
+      justify-content: flex-end;
+      padding: 24px 40px;
+    }
+    .theme-toggle {
+      display: flex;
+      align-items: center;
+      background: rgba(255,255,255,0.08);
+      border-radius: 24px;
+      padding: 4px;
+      gap: 2px;
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: background 0.3s;
+    }
+    [data-theme="light"] .theme-toggle,
+    [data-theme="sepia"] .theme-toggle {
+      background: rgba(0,0,0,0.06);
+      border-color: rgba(0,0,0,0.1);
+    }
+    .theme-btn {
+      width: 34px;
+      height: 28px;
+      border-radius: 18px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      transition: background 0.2s;
+      color: var(--muted);
+    }
+    .theme-btn.active {
+      background: rgba(255,255,255,0.15);
+      color: var(--text);
+    }
+    [data-theme="light"] .theme-btn.active,
+    [data-theme="sepia"] .theme-btn.active {
+      background: rgba(0,0,0,0.1);
+    }
+    main {
+      flex: 1;
+      padding: 48px 40px 80px;
+      max-width: 720px;
+    }
+    h1 {
+      font-family: 'Lora', serif;
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 28px;
+      line-height: 1.1;
+      animation: fadeUp 0.6s ease both;
+    }
+    .bio {
+      font-size: 1.15rem;
+      line-height: 1.75;
+      color: var(--text);
+      margin-bottom: 28px;
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+    .links-row {
+      display: flex;
+      gap: 24px;
+      font-size: 0.9rem;
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
+    .links-row a {
+      color: var(--link);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(96,200,255,0.3);
+      padding-bottom: 1px;
+      transition: opacity 0.2s;
+    }
+    [data-theme="light"] .links-row a,
+    [data-theme="sepia"] .links-row a {
+      border-bottom-color: rgba(0,0,0,0.2);
+    }
+    .links-row a:hover { opacity: 0.75; }
+    footer { padding: 32px 40px; }
+    .signature svg { width: 90px; height: 50px; opacity: 0.85; display: block; margin-bottom: 8px; }
+    .copyright { font-size: 0.8rem; color: var(--muted); }
     .bg-watermark {
       position: fixed;
       top: -20px;
@@ -75,213 +133,55 @@
       z-index: 0;
       transition: -webkit-text-stroke 0.3s;
     }
-
     [data-theme="light"] .bg-watermark,
     [data-theme="sepia"] .bg-watermark {
       -webkit-text-stroke: 1px rgba(0,0,0,0.05);
     }
-
-    /* NAV */
-    nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 24px 40px;
-      position: relative;
-      z-index: 10;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 32px;
-      list-style: none;
-    }
-
-    .nav-links a {
-      text-decoration: none;
-      font-family: 'Source Sans 3', sans-serif;
-      font-weight: 600;
-      font-size: 0.85rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--nav-inactive);
-      transition: color 0.2s;
-    }
-
-    .nav-links a.active {
-      color: var(--nav-active);
-      border-bottom: 2px solid var(--nav-active);
-      padding-bottom: 2px;
-    }
-
-    .nav-links a:hover { color: var(--nav-active); }
-
-    /* Theme toggle */
-    .theme-toggle {
-      display: flex;
-      align-items: center;
-      background: rgba(255,255,255,0.08);
-      border-radius: 24px;
-      padding: 4px;
-      gap: 2px;
-      border: 1px solid rgba(255,255,255,0.1);
-      transition: background 0.3s;
-    }
-
-    [data-theme="light"] .theme-toggle,
-    [data-theme="sepia"] .theme-toggle {
-      background: rgba(0,0,0,0.06);
-      border-color: rgba(0,0,0,0.1);
-    }
-
-    .theme-btn {
-      width: 34px;
-      height: 28px;
-      border-radius: 18px;
-      border: none;
-      background: transparent;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-      transition: background 0.2s;
-      color: var(--muted);
-    }
-
-    .theme-btn.active {
-      background: rgba(255,255,255,0.15);
-      color: var(--text);
-    }
-
-    [data-theme="light"] .theme-btn.active,
-    [data-theme="sepia"] .theme-btn.active {
-      background: rgba(0,0,0,0.1);
-    }
-
-    /* MAIN */
-    main {
-      flex: 1;
-      padding: 48px 40px 80px;
-      max-width: 720px;
-      position: relative;
-      z-index: 1;
-    }
-
-    h1 {
-      font-family: 'Lora', serif;
-      font-size: 2.8rem;
-      font-weight: 700;
-      color: var(--accent);
-      margin-bottom: 28px;
-      line-height: 1.1;
-      animation: fadeUp 0.6s ease both;
-    }
-
-    .bio {
-      font-size: 1.15rem;
-      line-height: 1.75;
-      color: var(--text);
-      margin-bottom: 28px;
-      animation: fadeUp 0.6s 0.1s ease both;
-    }
-
-    .links-row {
-      display: flex;
-      gap: 24px;
-      font-size: 0.9rem;
-      animation: fadeUp 0.6s 0.2s ease both;
-    }
-
-    .links-row a {
-      color: var(--link);
-      text-decoration: none;
-      border-bottom: 1px solid rgba(96,200,255,0.3);
-      padding-bottom: 1px;
-      transition: border-color 0.2s, opacity 0.2s;
-    }
-
-    .links-row a:hover {
-      border-color: var(--link);
-      opacity: 0.85;
-    }
-
-    /* FOOTER */
-    footer {
-      padding: 32px 40px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .signature {
-      margin-bottom: 8px;
-    }
-
-    .signature svg {
-      width: 90px;
-      height: 50px;
-      opacity: 0.85;
-    }
-
-    .copyright {
-      font-size: 0.8rem;
-      color: var(--muted);
-    }
+    main, footer, nav { position: relative; z-index: 1; }
 
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(16px); }
-      to { opacity: 1; transform: translateY(0); }
+      to   { opacity: 1; transform: translateY(0); }
     }
-
     @media (max-width: 600px) {
       nav { padding: 20px 24px; }
       main { padding: 36px 24px; }
       h1 { font-size: 2rem; }
       footer { padding: 24px; }
-      .bg-watermark { font-size: 160px; }
     }
   </style>
 </head>
-<body>
+<body data-theme="sepia">
 
   <div class="bg-watermark" aria-hidden="true">A</div>
 
   <nav>
-<div class="theme-toggle" role="group" aria-label="Theme selector">
-      <button class="theme-btn" data-t="sepia" title="Sepia" aria-label="Sepia theme">🌥</button>
-      <button class="theme-btn" data-t="light" title="Light" aria-label="Light theme">☀️</button>
-      <button class="theme-btn active" data-t="dark" title="Dark" aria-label="Dark theme">🌙</button>
+    <div class="theme-toggle" role="group" aria-label="Theme selector">
+      <button class="theme-btn active" data-t="sepia">S</button>
+      <button class="theme-btn" data-t="light">L</button>
+      <button class="theme-btn" data-t="dark">D</button>
     </div>
   </nav>
 
   <main>
     <h1>Advay Roongta</h1>
-
     <p class="bio">
-      I'm a high schooler at Leigh High School passionate about building things that matter.
-      Currently a Data Science Intern at UC Berkeley College of Engineering and Lead Organizer
-      of LG Hacks — a hackathon with 130+ participants and over $6,000 raised in its second
-      edition. I'm also involved in FIRST Robotics and volunteer as a hackathon organizer with Hack Club.
+     placeholder
     </p>
-
-    <p class="links-row">
-      <a href="https://advayroongta.github.io/portfolio/" target="_blank" rel="noopener">Portfolio ↗</a>
+    <div class="links-row">
       <a href="https://github.com/advayroongta" target="_blank" rel="noopener">GitHub ↗</a>
       <a href="https://www.linkedin.com/in/advayisawesome/" target="_blank" rel="noopener">LinkedIn ↗</a>
-    </p>
+    </div>
   </main>
 
   <footer>
     <div class="signature">
-      <svg viewBox="0 0 140 60" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Advay Roongta signature">
-        <!-- A -->
+      <svg viewBox="0 0 140 60" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="AR monogram">
         <path d="M8 46 C12 36, 16 26, 20 18 C22 14, 24 14, 26 18 C30 26, 34 36, 38 46" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         <path d="M12 34 L34 34" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
-        <!-- R -->
         <path d="M50 46 L50 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
         <path d="M50 18 C58 18, 64 20, 64 26 C64 32, 58 34, 50 34" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         <path d="M50 34 C55 34, 60 38, 65 46" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        <!-- underline -->
         <path d="M6 50 L90 50" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
       </svg>
     </div>
@@ -289,187 +189,16 @@
   </footer>
 
   <script>
-    const body = document.body;
     const btns = document.querySelectorAll('.theme-btn');
-
-    // Map theme names to body data-theme values
-    const themeMap = { dark: '', light: 'light', sepia: 'sepia' };
-
     btns.forEach(btn => {
       btn.addEventListener('click', () => {
-        const t = btn.dataset.t;
         btns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        if (t === 'dark') {
-          body.removeAttribute('data-theme');
-        } else {
-          body.setAttribute('data-theme', t);
-        }
+        const t = btn.dataset.t;
+        if (t === 'dark') document.body.removeAttribute('data-theme');
+        else document.body.setAttribute('data-theme', t);
       });
     });
-  </script>
-
-  <canvas id="grid-bg"></canvas>
-  <style>
-    #grid-bg {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      z-index: 0;
-      pointer-events: none;
-    }
-  </style>
-  <script>
-    const canvas = document.getElementById('grid-bg');
-    const ctx = canvas.getContext('2d');
-    const CELL = 60;
-    let cols, rows, cells = [];
-    let mouseX = -999, mouseY = -999;
-
-    function resize() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      cols = Math.ceil(canvas.width / CELL) + 1;
-      rows = Math.ceil(canvas.height / CELL) + 1;
-      cells = [];
-      for (let r = 0; r < rows; r++) {
-        for (let c = 0; c < cols; c++) {
-          cells.push({ c, r, hue: 0, alpha: 0 });
-        }
-      }
-    }
-
-    window.addEventListener('mousemove', e => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-    });
-
-    window.addEventListener('resize', resize);
-    resize();
-
-    // Base hue from CSS theme
-    function getBaseHue() {
-      const theme = document.body.getAttribute('data-theme');
-      if (theme === 'light') return 210;
-      if (theme === 'sepia') return 35;
-      return 210;
-    }
-
-    function draw() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const baseHue = getBaseHue();
-
-      cells.forEach(cell => {
-        const x = cell.c * CELL;
-        const y = cell.r * CELL;
-        const cx = x + CELL / 2;
-        const cy = y + CELL / 2;
-        const dist = Math.sqrt((cx - mouseX) ** 2 + (cy - mouseY) ** 2);
-        const maxDist = 180;
-        const proximity = Math.max(0, 1 - dist / maxDist);
-
-        const targetAlpha = proximity * 0.55;
-        cell.alpha += (targetAlpha - cell.alpha) * 0.1;
-        const targetHue = baseHue + proximity * 60;
-        cell.hue += (targetHue - cell.hue) * 0.1;
-
-        // Always draw grid lines visibly
-        ctx.strokeStyle = `rgba(255,255,255,0.12)`;
-        ctx.lineWidth = 0.5;
-        ctx.strokeRect(x, y, CELL, CELL);
-
-        if (cell.alpha > 0.005) {
-          ctx.fillStyle = `hsla(${cell.hue}, 80%, 70%, ${cell.alpha})`;
-          ctx.fillRect(x + 1, y + 1, CELL - 2, CELL - 2);
-        }
-      });
-
-      requestAnimationFrame(draw);
-    }
-
-    draw();
-  </script>
-
-  <canvas id="cursor-canvas"></canvas>
-  <style>
-    #cursor-canvas {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      z-index: 999;
-      pointer-events: none;
-    }
-  </style>
-  <script>
-    const cc = document.getElementById('cursor-canvas');
-    const cx2 = cc.getContext('2d');
-    const CELL2 = 60;
-
-    let realX = -999, realY = -999;
-    let snapX = -999, snapY = -999;
-    let trail = []; // recent snapped cells
-    const MAX_TRAIL = 6;
-
-    function resize2() {
-      cc.width = window.innerWidth;
-      cc.height = window.innerHeight;
-    }
-    window.addEventListener('resize', resize2);
-    resize2();
-
-    window.addEventListener('mousemove', e => {
-      realX = e.clientX;
-      realY = e.clientY;
-    });
-
-    function drawCursor() {
-      cx2.clearRect(0, 0, cc.width, cc.height);
-
-      if (realX < 0) { requestAnimationFrame(drawCursor); return; }
-
-      // Snap to nearest grid cell
-      const col = Math.floor(realX / CELL2);
-      const row = Math.floor(realY / CELL2);
-      const newSnapX = col * CELL2;
-      const newSnapY = row * CELL2;
-
-      // Add to trail if moved to new cell
-      if (newSnapX !== snapX || newSnapY !== snapY) {
-        snapX = newSnapX;
-        snapY = newSnapY;
-        // avoid duplicates
-        if (!trail.length || trail[trail.length-1].x !== snapX || trail[trail.length-1].y !== snapY) {
-          trail.push({ x: snapX, y: snapY });
-          if (trail.length > MAX_TRAIL) trail.shift();
-        }
-      }
-
-      // Draw trail cells fading out
-      trail.forEach((cell, i) => {
-        const alpha = ((i + 1) / trail.length) * 0.35;
-        cx2.strokeStyle = `rgba(96, 200, 255, ${alpha})`;
-        cx2.lineWidth = 1.5;
-        cx2.strokeRect(cell.x + 2, cell.y + 2, CELL2 - 4, CELL2 - 4);
-      });
-
-      // Draw main cursor square — bright border + subtle fill
-      cx2.strokeStyle = 'rgba(96, 200, 255, 1)';
-      cx2.lineWidth = 2;
-      cx2.strokeRect(snapX + 2, snapY + 2, CELL2 - 4, CELL2 - 4);
-
-      cx2.fillStyle = 'rgba(96, 200, 255, 0.08)';
-      cx2.fillRect(snapX + 2, snapY + 2, CELL2 - 4, CELL2 - 4);
-
-      // Small crosshair dot at real mouse position
-      cx2.fillStyle = 'rgba(96, 200, 255, 0.9)';
-      cx2.beginPath();
-      cx2.arc(realX, realY, 2.5, 0, Math.PI * 2);
-      cx2.fill();
-
-      requestAnimationFrame(drawCursor);
-    }
-
-    drawCursor();
   </script>
 </body>
 </html>
