@@ -139,6 +139,53 @@
     }
     main, footer, nav { position: relative; z-index: 1; }
 
+    .tooltip-wrap {
+      position: relative;
+      display: inline-block;
+    }
+    .hl {
+      color: var(--link);
+      border-bottom: 1px dashed currentColor;
+      cursor: default;
+      transition: opacity 0.2s;
+    }
+    .hl:hover { opacity: 0.75; }
+    .tooltip {
+      position: absolute;
+      bottom: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.82);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 6px;
+      padding: 6px 12px;
+      white-space: nowrap;
+      font-size: 0.8rem;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.18s, transform 0.18s;
+      transform: translateX(-50%) translateY(4px);
+      z-index: 100;
+    }
+    .tooltip a {
+      color: #60c8ff;
+      text-decoration: none;
+    }
+    .tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: rgba(0,0,0,0.82);
+    }
+    .tooltip-wrap:hover .tooltip {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(-50%) translateY(0);
+    }
+
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(16px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -166,7 +213,31 @@
   <main>
     <h1>Advay Roongta</h1>
     <p class="bio">
-     Hello there! This site is currently a work in progress. 
+      Hello there! I'm a high schooler from the Bay Area. In my free time I love playing the
+      <span class="tooltip-wrap">
+        <span class="hl">saxophone</span>
+        <span class="tooltip"><a href="https://www.youtube.com/watch?v=hacINoEem5s" target="_blank" rel="noopener">Watch me play</a></span>
+      </span>,
+      as well as
+      <span class="tooltip-wrap">
+        <span class="hl">table tennis</span>
+        <span class="tooltip"><a href="https://highway.hackclub.com/projects/advayroongta/tabletennisbot" target="_blank" rel="noopener">Table Tennis Bot</a></span>
+      </span>.
+      I also enjoy seeing projects and ideas come together, which is why I spend a lot of my time building
+      projects revolving around my interests. This led me to attend a few
+hackathons,
+      and make a few (relatively minor)
+      <span class="tooltip-wrap">
+        <span class="hl">open source contributions</span>
+        <span class="tooltip"><a href="https://hackclub.com" target="_blank" rel="noopener">hackclub.com</a></span>
+      </span>
+      to projects with thousands of users. It also led me down the path of organizing my very own
+      <span class="tooltip-wrap">
+        <span class="hl">hackathons</span>
+        <span class="tooltip"><a href="https://lghacks.com" target="_blank" rel="noopener">lghacks.com</a></span>
+      </span>.
+      Fun fact: I've been lucky enough to be rewarded a $150 grant from HackClub to continue the table tennis robot project I linked above.
+      And finally, I hope visiting my website was able to provide a little insight to who I am, therefore fulfilling the purpose of why I built it.
     </p>
     <div class="links-row">
       <a href="https://github.com/advayroongta" target="_blank" rel="noopener">GitHub ↗</a>
@@ -185,7 +256,6 @@
         <path d="M6 50 L90 50" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
       </svg>
     </div>
-    <p class="copyright">© 2026 Advay Roongta</p>
   </footer>
 
   <script>
